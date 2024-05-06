@@ -14,6 +14,7 @@
 
 from .. import base_solver
 from ...settings import SDE_TYPES, NOISE_TYPES, LEVY_AREA_APPROXIMATIONS
+drom numpy import real
 
 
 class Midpoint(base_solver.BaseSDESolver):
