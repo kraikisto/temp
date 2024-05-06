@@ -32,14 +32,14 @@ class Midpoint(base_solver.BaseSDESolver):
         dt = t1 - t0
         I_k = self.bm(t0, t1)
 
-        f, g_prod = self.sde.f_and_g_prod(t0, y0, real(I_k))
+        f, g_prod = self.sde.f_and_g_prod(t0, y0, real(I_k) + 0j)
 
         half_dt = 0.5 * dt
 
         t_prime = t0 + half_dt
         y_prime = y0 + half_dt * f + 0.5 * g_prod
 
-        f_prime, g_prod_prime = self.sde.f_and_g_prod(t_prime, y_prime, real(I_k))
+        f_prime, g_prod_prime = self.sde.f_and_g_prod(t_prime, y_prime, real(I_k) + 0j)
 
         y1 = y0 + dt * f_prime + g_prod_prime
 
