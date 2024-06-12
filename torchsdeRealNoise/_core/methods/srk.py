@@ -59,7 +59,7 @@ class SRK(base_solver.BaseSDESolver):
         dt = t1 - t0
         rdt = 1 / dt
         sqrt_dt = dt.sqrt()
-        I_k, I_k0 = self.bm(t0, t1, return_U=True) + 0j
+        I_k, I_k0 = self.bm(t0, t1, return_U=True)
         I_kk = (I_k ** 2 - dt) * _r2
         I_kkk = (I_k ** 3 - 3 * dt * I_k) * _r6
 
@@ -83,7 +83,7 @@ class SRK(base_solver.BaseSDESolver):
                     srid2.beta3[s] * I_k0 * rdt +
                     srid2.beta4[s] * I_kkk * rdt
             )
-            g_prod = self.sde.g_prod(t0 + srid2.C1[s] * dt, H1s, g_weight)
+            g_prod = self.sde.g_prod(t0 + srid2.C1[s] * dt, H1s, g_weight + 0j)
             y1 = y1 + srid2.alpha[s] * f * dt + g_prod
         return y1, ()
 
@@ -100,12 +100,12 @@ class SRK(base_solver.BaseSDESolver):
             for j in range(i):
                 f = self.sde.f(t0 + sra1.C0[j] * dt, H0[j])
                 g_weight = sra1.B0[i][j] * I_k0 * rdt
-                g_prod = self.sde.g_prod(t0 + sra1.C1[j] * dt, y0, g_weight)
+                g_prod = self.sde.g_prod(t0 + sra1.C1[j] * dt, y0, g_weight + 0j)
                 H0i = H0i + sra1.A0[i][j] * f * dt + g_prod
             H0.append(H0i)
 
             f = self.sde.f(t0 + sra1.C0[i] * dt, H0i)
             g_weight = sra1.beta1[i] * I_k + sra1.beta2[i] * I_k0 * rdt
-            g_prod = self.sde.g_prod(t0 + sra1.C1[i] * dt, y0, g_weight)
+            g_prod = self.sde.g_prod(t0 + sra1.C1[i] * dt, y0, g_weight + 0j)
             y1 = y1 + sra1.alpha[i] * f * dt + g_prod
         return y1, ()
