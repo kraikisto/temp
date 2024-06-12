@@ -59,7 +59,7 @@ class SRK(base_solver.BaseSDESolver):
         dt = t1 - t0
         rdt = 1 / dt
         sqrt_dt = dt.sqrt()
-        I_k, I_k0 = self.bm(t0, t1, return_U=True)
+        I_k, I_k0 = self.bm(t0, t1, return_U=True) + 0j
         I_kk = (I_k ** 2 - dt) * _r2
         I_kkk = (I_k ** 3 - 3 * dt * I_k) * _r6
 
